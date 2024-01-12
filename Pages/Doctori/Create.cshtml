@@ -14,6 +14,11 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Doctor.Titulatura" class="control-label"></label>
+                <input asp-for="Doctor.Titulatura" class="form-control" />
+                <span asp-validation-for="Doctor.Titulatura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Doctor.Nume" class="control-label"></label>
                 <input asp-for="Doctor.Nume" class="form-control" />
                 <span asp-validation-for="Doctor.Nume" class="text-danger"></span>
@@ -22,6 +27,16 @@
                 <label asp-for="Doctor.Prenume" class="control-label"></label>
                 <input asp-for="Doctor.Prenume" class="form-control" />
                 <span asp-validation-for="Doctor.Prenume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Doctor.TelefonMobil" class="control-label"></label>
+                <input asp-for="Doctor.TelefonMobil" class="form-control" />
+                <span asp-validation-for="Doctor.TelefonMobil" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Doctor.Email" class="control-label"></label>
+                <input asp-for="Doctor.Email" class="form-control" />
+                <span asp-validation-for="Doctor.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
