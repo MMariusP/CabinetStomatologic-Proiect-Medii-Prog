@@ -23,7 +23,7 @@ namespace CabinetStomatologic.Models.SpecializariUtil
                 });
             }
         }
-        public void UpdateBookCategories(CabinetStomatologicContext context,
+        public void UpdateSpecializariDoctori(CabinetStomatologicContext context,
         string[] selectedCategories, Doctor doctorToUpdate)
         {
             if (selectedCategories == null)
