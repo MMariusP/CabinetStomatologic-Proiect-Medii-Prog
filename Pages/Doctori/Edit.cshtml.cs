@@ -63,9 +63,8 @@ namespace CabinetStomatologic.Pages.Doctori
                 return NotFound();
             }
 
-            if (await TryUpdateModelAsync<Doctor>( doctorToUpdate,"Doctor",
-            i => i.Title, i => i.Author,
-            i => i.Price, i => i.PublishingDate, i => i.PublisherID))
+            if (await TryUpdateModelAsync<Doctor>(doctorToUpdate, "Doctor",
+                i => i.Titulatura, i => i.Nume, i => i.Prenume, i => i.TelefonMobil, i => i.Email))
             {
                 UpdateBookCategories(_context, specializariSelectate, doctorToUpdate);
                 await _context.SaveChangesAsync();
@@ -74,7 +73,7 @@ namespace CabinetStomatologic.Pages.Doctori
             //Apelam UpdateBookCategories pentru a aplica informatiile din checkboxuri la entitatea Books care
             //este editata
             UpdateBookCategories(_context, specializariSelectate, doctorToUpdate);
-            PopulateAssignedCategoryData(_context, doctorToUpdate);
+            PopulateAssignedSpecializariData(_context, doctorToUpdate);
             return Page();
         }
 
