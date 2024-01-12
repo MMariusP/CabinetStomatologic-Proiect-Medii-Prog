@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CabinetStomatologic.Data;
 using CabinetStomatologic.Models;
+using CabinetStomatologic.Models.SpecializariUtil;
 
 namespace CabinetStomatologic.Pages.Doctori
 {
-    public class EditModel : PageModel
+    public class EditModel : SpecializariDoctoriPageModel
     {
         private readonly CabinetStomatologic.Data.CabinetStomatologicContext _context;
 
@@ -30,43 +31,51 @@ namespace CabinetStomatologic.Pages.Doctori
                 return NotFound();
             }
 
-            var doctor =  await _context.Doctor.FirstOrDefaultAsync(m => m.ID == id);
+            var doctor =  await _context.Doctor
+                .Include( d => d.SpecializariDoctor).ThenInclude(b => b.Specializare)
+                .FirstOrDefaultAsync(m => m.ID == id);
+
             if (doctor == null)
             {
                 return NotFound();
             }
-            Doctor = doctor;
+
+            PopulateAssignedSpecializariData(_context, doctor);
+
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id, string[] specializariSelectate)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
+            }
+            var doctorToUpdate = await _context.Doctor
+            .Include(i => i.SpecializariDoctor)
+            .ThenInclude(i => i.Specializare)
+            .FirstOrDefaultAsync(s => s.ID == id);
+
+            if (doctorToUpdate == null)
+            {
+                return NotFound();
             }
 
-            _context.Attach(Doctor).State = EntityState.Modified;
-
-            try
+            if (await TryUpdateModelAsync<Doctor>( doctorToUpdate,"Doctor",
+            i => i.Title, i => i.Author,
+            i => i.Price, i => i.PublishingDate, i => i.PublisherID))
             {
+                UpdateBookCategories(_context, specializariSelectate, doctorToUpdate);
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DoctorExists(Doctor.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
+            //Apelam UpdateBookCategories pentru a aplica informatiile din checkboxuri la entitatea Books care
+            //este editata
+            UpdateBookCategories(_context, specializariSelectate, doctorToUpdate);
+            PopulateAssignedCategoryData(_context, doctorToUpdate);
+            return Page();
         }
 
         private bool DoctorExists(int id)

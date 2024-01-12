@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CabinetStomatologic.Models.SpecializariUtil;
 
 namespace CabinetStomatologic.Models
 {
@@ -28,5 +29,6 @@ namespace CabinetStomatologic.Models
         [Display(Name = "Adresa de email")]
         public string? Email { get; set; }
 
+        public ICollection<SpecializariDoctor>? SpecializariDoctor { get; set; }
     }
 }

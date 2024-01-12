@@ -10,6 +10,7 @@ namespace CabinetStomatologic.Models
         [Required]
         public string Name { get; set; }
 
+
         [DataType(DataType.Date)]
         [Display(Name= "Data si Ora Programarii dumneavoastra")]
         public DateTime DataProgramare { get; set; }   

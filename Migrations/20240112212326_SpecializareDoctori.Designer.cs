@@ -4,6 +4,7 @@ using CabinetStomatologic.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CabinetStomatologic.Migrations
 {
     [DbContext(typeof(CabinetStomatologicContext))]
-    partial class CabinetStomatologicContextModelSnapshot : ModelSnapshot
+    [Migration("20240112212326_SpecializareDoctori")]
+    partial class SpecializareDoctori
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
