@@ -22,12 +22,20 @@
             <th>
                 @Html.DisplayNameFor(model => model.Doctor[0].Prenume)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doctor[0].SpecializariDoctor)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Doctor) {
-        <tr>
+@foreach (var item in Model.DoctorD.Doctors) {
+            string selectedRow = "";
+            if (item.ID == Model.DoctorID)
+            {
+                selectedRow = "table-success";
+            }
+        <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.Titulatura)
             </td>
@@ -37,6 +45,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Prenume)
             </td>
+                <td>
+                    @{
+                        foreach (var category in item.SpecializariDoctor)
+                        {
+                            @category.Specializare.ID @: @category.Specializare.NumeSpecializare <br />
+                        }
+                    }
+                </td>
+
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
